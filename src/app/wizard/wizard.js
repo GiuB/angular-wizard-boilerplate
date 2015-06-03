@@ -1,10 +1,12 @@
 angular.module( 'ngBoilerplate.wizard', [
   'ui.router',
+  'ui.router.compat',
   'placeholders',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngAnimate'
 ])
 
-.config(function config( $stateProvider ) {
+.config(function config( $stateProvider, $urlRouterProvider ) {
   $stateProvider
     .state( 'wizard', {
       url: '/wizard',
@@ -31,19 +33,21 @@ angular.module( 'ngBoilerplate.wizard', [
     });
 })
 
-.controller( 'WizardCtrl', function WizardCtrl( $scope ) {
+.controller( 'WizardCtrl', function WizardCtrl( $scope, $rootScope ) {
   $scope.steps = ['1', '2', '3'];
   $scope.currentStep = $scope.steps[0];
 
-  $scope.goNext = function() {
-    alert('test');
-  };
+  $scope.$on('$stateChangeSuccess', function (event, toState) {
+    $scope.currentStep = toState.name.replace(/wizard.step-/g,"");
 
-  $scope.updateCurrentStep = function(step) {
-    $scope.currentStep = step;
+    if ($scope.currentStep == '2') {
+     $scope.back = true;
+    } else {
+     $scope.back = false;
+    }
 
-    alert($scope.currentStep);
-  };
+    console.log('state changed, animaton back: ' + $scope.back);
+  });
 
 });
 

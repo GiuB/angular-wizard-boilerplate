@@ -1,11 +1,17 @@
 <div class="row">
   <h1 class="page-header">
-    The Elevator Pitch
+    Test wizard
     <small>For the lazy and impatient.</small>
   </h1>
+
+  <!-- 
   <div id="main-steps-container" ng-switch on="currentStep">
-    <!-- our nested state views will be injected here -->
+    <!-- our nested state views will be injected here
     <div ng-include src="'wizard/steps/step-1.tpl.html'"></div>
     <div ng-include src="'wizard/steps/step-2.tpl.html'"></div>
-  </div>
+  </div> -->
+  <form id="wizard-form-container" ng-class="{back: back, next: !back}" ng-submit="alert('sbmitted')">
+      <!-- our nested state views will be injected here -->
+      <div id="wizard-views" ui-view></div>
+  </form>
 </div>
